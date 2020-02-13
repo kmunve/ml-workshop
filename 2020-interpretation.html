@@ -1,0 +1,320 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Interpretation</title>
+
+    <link rel="stylesheet" href="reveal.js/css/reset.css">
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <!-- <link rel="stylesheet" href="reveal.js/css/theme/black.css"> -->
+    <link rel="stylesheet" href="reveal.js/css/theme/solarized.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal.js/lib/css/monokai.css">
+
+    <style>
+        /*pre code {*/
+        /*display: block;*/
+        /*padding: 0.5em;*/
+        /*background: #FFFFFF !important;*/
+        /*color: #000000 !important;*/
+        /*}*/
+
+        .right-img {
+            margin-left: 10px !important;
+            float: right;
+            height: 500px;
+        }
+
+        .todo:before {
+            content: 'TODO: ';
+        }
+
+        .todo {
+            color: red !important;
+        }
+
+        code span.line-number {
+            color: lightcoral;
+        }
+
+        .reveal pre code {
+            max-height: 1000px !important;
+        }
+
+        img {
+            border: 0 !important;
+            box-shadow: 0 0 0 0 !important;
+        }
+
+        .reveal {
+            -ms-touch-action: auto !important;
+            touch-action: auto !important;
+        }
+
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            letter-spacing: 2px;
+            font-family: 'Amiri', serif;
+            /* font-family: 'Times New Roman', Times, serif; */
+            font-weight: bold;
+            font-style: italic;
+            letter-spacing: -2px;
+            text-transform: none !important;
+        }
+
+        .reveal em {
+            font-weight: bold;
+        }
+
+        .reveal .step-subtitle h1 {
+            letter-spacing: 1px;
+        }
+
+        .reveal .step-subtitle h2,
+        .reveal .step-subtitle h3 {
+            text-transform: none;
+            font-style: italic;
+            font-weight: normal;
+            /* font-weight: 400; */
+            /* font-family: 'Amiri', serif; */
+            font-family: 'Lobster', serif;
+            letter-spacing: 1px;
+            color: #2aa198;
+            text-decoration: underline;
+        }
+
+        .reveal .front-page h1,
+        .reveal .front-page h2 {
+            font-family: "League Gothic";
+            font-style: normal;
+            text-transform: uppercase !important;
+            letter-spacing: 1px;
+        }
+
+        .reveal .front-page h1 {
+            font-size: 2.5em !important;
+        }
+
+        .reveal .highlight {
+            background-color: #D3337B;
+            color: white;
+        }
+
+        .reveal section img {
+            background: none;
+        }
+
+        .reveal img.with-border {
+            border: 1px solid #586e75 !important;
+            box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .reveal li {
+            margin-bottom: 8px;
+        }
+
+        /* For li's that use FontAwesome icons as bullet-point */
+        .reveal ul.fa-ul li {
+            list-style-type: none;
+        }
+    </style>
+
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        var printMode = window.location.search.match(/print-pdf/gi);
+        link.href = printMode ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+                        <section data-markdown class="todo">
+                        <textarea data-template>
+                    
+Techniken
+1. Surrogate Modell plus Introspektion
+2. What If / Icicle Plots
+3. Lime, Shap etc.
+</textarea>
+</section>
+
+
+<section data-markdown class="todo">
+    <textarea data-template>
+[]Was heißt das eigentlich? Regeln? Wie viele? Wie genau? Widerspruch?
+    []Neue Berufe die die Regeln auslegen und erklären? Rechtsanwalt?
+    * Stabilität der Vorhersage
+</textarea>
+</section>
+
+<section data-markdown class="todo">
+        <textarea data-template>
+### Stop Explaining Black Box Machine Learning Models for High Stakes Decisions and Use Interpretable Models Instead
+
+https://arxiv.org/abs/1811.10154
+</textarea>
+</section>
+
+<section data-markdown class="todo">
+    <textarea data-template>
+### Allgemeiner Als Referenz
+
+Omayma🔎 (@OmaymaS_) tweeted at 10:14 PM on Thu, Dec 12, 2019:
+👩‍💼Snapshots of my slides on "Machine Learning Interpretability" with an overview of the relevant packages and cloud solutions.
+
+👉 Full version on speakerdeck: https://t.co/YPqZKdyihQ
+
+#rstats #python #MachineLearning https://t.co/YjDU8gXsUv
+(https://twitter.com/OmaymaS_/status/1205234474872705024?s=03)
+</textarea>
+</section>
+
+<section data-markdown class="todo">
+        <textarea data-template>
+### Diskussion zu Artikel darüber
+
+https://twitter.com/rasbt/status/1200811980535353344
+
+<img src='img/raschka-interp-discussion-twitter.png'>
+</textarea>
+</section>
+
+<section data-markdown class="todo">
+        <textarea data-template>
+### Allgemein ist die Systematik anders als bei MACH
+
+Interpretable > Explainable
+
+<img src='img/gode-ml-summit-interp.jpg'>
+</textarea>
+</section>
+
+<section data-markdown class="todo">
+    <textarea data-template>
+### Post pruning decision trees with cost complexity pruning        
+
+https://scikit-learn.org/dev/auto_examples/tree/plot_cost_complexity_pruning.html        
+    </textarea>
+</section>
+
+
+<section data-markdown>
+    <textarea data-template>
+
+### Abstract
+
+Squaring Deep Neural Networks for interpretability - Decision Trees as Surrogate Model for Neural Networks
+
+Deep Neural Networks have outstanding performance and flexibility when learning from complex data sets. 
+They can be regularized to generalize well on pretty much any data set. 
+However, without additional work, they are black boxes and how they come to conclusions is not transparent or comprehensible.
+
+Exactly this right to explanation is well established by 
+Europe's GDPR (https://en.wikipedia.org/wiki/General_Data_Protection_Regulation),
+United States' credit score (https://en.wikipedia.org/wiki/Right_to_explanation, https://en.wikipedia.org/wiki/Credit_score_in_the_United_States), and
+many other real world applications.
+
+On the opposite side, decision trees can be much more comprehensible, and can be trained either towards high understandability (simple tree) 
+or high accuracy (complex tree). Unfortunately, unlike Neural Networks they tend to overfit when trained on real world data and are hard to regularize.
+
+In this contribution I will show how training decision trees on data generated by a neural network 
+gives us a dial to be tuned between predictive power on one side and explainability on the other side.
+</textarea>
+</section>
+
+<section data-markdown class="todo">
+    <textarea data-template>
+## Surrogate Models        
+### Scaling down using a surrogate model
+
+https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/tf-surrogate-model.ipynb
+http://bit.ly/scaling-down-2020
+https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/tf-surrogate-model-experiments.ipynb
+
+    </textarea>
+</section>
+        </div>
+    </div>
+
+    <script src="reveal.js/js/reveal.js"></script>
+    <script src="lib/jquery-2.2.4.js"></script>
+
+    <script>
+        $('section:not([data-background])').attr('data-background', "background/white.jpg");
+    </script>
+    <script>
+        const isLocal = window.location.hostname.indexOf('localhost') !== -1 || 
+                    window.location.hostname.indexOf('127.0.0.1') !== -1;
+    
+        if (isLocal && !printMode) {
+        } else {
+            // only applies to public version
+                $('.todo').remove();
+                $('.preparation').remove();
+                $('.local').remove();
+        }
+    
+        Reveal.addEventListener( 'ready', function( event ) {
+            // applies to all versions
+            $('code').addClass('line-numbers');
+    
+            $('.fragments li').addClass('fragment')
+    
+            // make all links open in new tab
+            $('a').attr('target', '_blank')
+    
+            if (isLocal && !printMode) {
+                // only applies to presentation version
+                Reveal.configure({ controls: false });
+            } else {
+                // only applies to public version
+                $('.fragment').removeClass('fragment');
+            }
+    
+    
+        } );
+    </script>
+    
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            controls: true,
+            progress: false,
+            history: true,
+            center: true,
+            width: 1100,
+
+            transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+            math: {
+                mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+            },
+
+            dependencies: [
+                { src: 'reveal.js/plugin/markdown/marked.js' },
+                { src: 'reveal.js/plugin/markdown/markdown.js' },
+                { src: 'reveal.js/plugin/notes/notes.js', async: true },
+                { src: 'reveal.js/plugin/highlight/highlight.js', async: true },
+                { src: 'lib/js/line-numbers.js' },
+                { src: 'reveal.js/plugin/math/math.js', async: true }
+            ]
+        });
+    </script>
+</body>
+
+</html>

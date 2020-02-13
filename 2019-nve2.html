@@ -140,16 +140,104 @@
     <div class="reveal">
         <div class="slides">
 
- <section data-markdown>
-        <textarea data-template>
+<section data-markdown>
+    <textarea data-template>
 ## Workshop \#2             
 ### Introduction to Neural Networks with TensorFlow 
 #### and
 ### Working on real projects
 
 These slides: http://bit.ly/workshop-ml2-nve
-    </textarea>
-    </section>
+</textarea>
+</section>
+
+
+<section data-markdown style="font-size: xx-large">
+    <textarea data-template>
+## Practical Advice from Olli
+
+* Accuracy should be actionable
+* Overfit on a small subset
+* Have clear input and output
+* Could a human learn from that data?
+* Train/Test Split
+* Fighting overfitting
+* Is your model large enough?
+* Start small and humble
+* Make incremental changes to something that works in some way
+* Use a baseline so you know what is possible
+* Once you have anything working, save it as a copy
+
+<!-- After production:
+* You are never done
+* Going into production is not the end of the story
+* Don't let your model go stale -->
+</textarea>
+</section>
+
+<section data-markdown style="font-size: xx-large">
+    <textarea data-template>
+### Words from François Chollet
+
+<img src='img/fcholett-acc.png' height="500">
+
+<small>
+
+https://twitter.com/fchollet/status/1176625911036145666
+    </small>
+</textarea>
+</section>
+
+
+<section data-markdown style="font-size: xx-large">
+    <textarea data-template>
+## Practical advice from a master of his craft
+
+_Challenges of training neural nets_
+1. Neural net training is a leaky abstraction - you need to understand what is going on
+1. Neural net training fails silently - the possible error surface is large
+
+_The recipe_
+1. Understand your data
+1. Make one simple experiment after the other
+1. Make your model good / large enough to overfit on a batch
+1. Regularize on full data set
+1. Tune and scrape the barrel
+
+<small>
+
+https://karpathy.github.io/2019/04/25/recipe/    
+</small>
+</textarea>
+</section>
+
+
+<section data-markdown style="font-size: large">
+    <textarea data-template>
+### Overview of Notebooks
+
+_Classic_
+* Regression: https://colab.research.google.com/github/djcordhose/ml-workshop/blob/master/notebooks/classic/regression.ipynb
+* Classification: https://colab.research.google.com/github/djcordhose/ml-workshop/blob/master/notebooks/classic/strategies.ipynb
+* Clustering: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/unsupervised/cluster-insurance.ipynb
+<!-- * Dimensionality Reduction: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/unsupervised/pca-insurance.ipynb -->
+
+_Neural Networks_
+* Regression: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/tf-low-level.ipynb
+* Classification: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/tf-low-level-classifier.ipynb
+* Dense / Tabular data: https://colab.research.google.com/github/djcordhose/ml-workshop/blob/master/notebooks/tf2/tf-dense-insurance-final.ipynb
+* Convolutional / Images: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/images-intro.ipynb
+* RNN / Sequences: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/seq-basics.ipynb
+* RNN / Sequences Advanced: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/seq-advanced.ipynb
+* Analyses of the data: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/time-series-analyses.ipynb
+<!-- * Classic Machine Learning: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/time-series-classic.ipynb -->
+<!-- * RNNs: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/time-series-rnn.ipynb -->
+* RNNs: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/time-series-rnn-full-predict.ipynb
+* Multi-Step Encoder/Decoder: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/time-series-encoder-decoder.ipynb
+
+</textarea>
+</section>
+
 
 <section data-markdown>
     <textarea data-template>        
@@ -175,8 +263,6 @@ https://docs.google.com/document/d/12S40uiNrLXdR_K3yrKjD0e0bXs9WsVkLUh0PKhcMYnI/
 * Do the same with the blue one to indicate you are done with an exercise (please remove at the beginning of each exercise)
 </textarea>
 </section>
-
-
 
 <section data-markdown>
     <textarea data-template>
@@ -225,9 +311,21 @@ Time Series
     * Next steps
 </textarea>
 </section>
-            
-        </div>
-    </div>
+
+<section data-markdown>
+        <textarea data-template>
+### Plan for Friday
+
+* ~ 9:00 - 10:30 Time Series Data Introduction
+* ~ 10:30 - 11:00 Break and preparation of short Presentation
+    * share your notebook to avoid switching machines if possible
+    * either in http://bit.ly/nve-scratch
+    * or with Olli
+* ~ 11:00 - 11:30 Presentations
+* 11:30 - 12:30 Lunch Break
+* 12:30 - 16:00 Optionally more work on projects
+</textarea>
+</section>
 
     <section data-markdown>
         <textarea data-template>
@@ -236,14 +334,16 @@ Time Series
 _Guideline_
 
 * Overall status of the project
-* What data is there?
-* Is it loaded into a notebook?
 * What is the favored Machine Learning approach?
-
-5 minutes each
+* Can you show results?
+* What are your next steps?
+* Where can other people help you?
 
 </textarea>
     </section>
+
+</div>
+</div>
 
     <script src="reveal.js/js/reveal.js"></script>
     <script src="lib/jquery-2.2.4.js"></script>

@@ -1,0 +1,1370 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Neural Embeddings</title>
+
+    <link rel="stylesheet" href="reveal.js/css/reset.css">
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <!-- <link rel="stylesheet" href="reveal.js/css/theme/black.css"> -->
+    <link rel="stylesheet" href="reveal.js/css/theme/solarized.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal.js/lib/css/monokai.css">
+
+    <style>
+        /*pre code {*/
+        /*display: block;*/
+        /*padding: 0.5em;*/
+        /*background: #FFFFFF !important;*/
+        /*color: #000000 !important;*/
+        /*}*/
+
+        .right-img {
+                  margin-left: 10px !important;
+                  float: right;
+                  height: 500px;
+              }
+              .todo:before {
+                  content: 'TODO: ';
+              }
+              .todo {
+                  color: red !important;
+              }
+              code span.line-number {
+                  color: lightcoral;
+              }
+              .reveal pre code {
+                  max-height: 1000px !important;
+              }
+      
+              img {
+                  border: 0 !important;
+                  box-shadow:0 0 0 0 !important;
+              }
+      
+              .reveal {
+                  -ms-touch-action: auto !important;
+                  touch-action: auto !important;
+                      }
+      
+                      .reveal h2,
+                      .reveal h3,
+                      .reveal h4 {
+                        letter-spacing: 2px;
+                          font-family: 'Calibri', sans-serif;
+                          /* font-family: 'Times New Roman', Times, serif; */
+                          font-weight: bold;
+                          color: black;
+                          font-style: italic;
+                          letter-spacing: -2px;
+                          text-transform: none !important;
+                      }
+      
+                      .reveal em {
+                          font-weight: bold;
+                      }
+      
+                      .reveal .step-subtitle h1 {
+                          letter-spacing: 1px;
+                      }
+                      .reveal .step-subtitle h2,
+                      .reveal .step-subtitle h3 {
+                          text-transform: none;
+                          font-style: italic;
+                          font-weight: normal;
+                          /* font-weight: 400; */
+                          /* font-family: 'Amiri', serif; */
+                          font-family: 'Lobster', serif;
+                          letter-spacing: 1px;
+                          color: #2aa198;
+                          text-decoration: underline;
+                      }
+      
+                      .reveal .front-page h1,
+                      .reveal .front-page h2 {
+                          font-family: "League Gothic";
+                          font-style: normal;
+                          text-transform: uppercase !important;
+                          letter-spacing: 1px;
+                      }
+      
+                      .reveal .front-page h1 {
+                          font-size: 2.5em !important;
+                      }
+      
+                      .reveal .highlight {
+                          background-color: #D3337B;
+                          color: white;
+                      }
+      
+              .reveal section img {
+                background: none;
+              }
+      
+                      .reveal img.with-border {
+                          border: 1px solid #586e75 !important;
+                          box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.15) !important;
+                      }
+      
+                      .reveal li {
+                          margin-bottom: 8px;
+                      }
+      
+                      /* For li's that use FontAwesome icons as bullet-point */
+                  .reveal ul.fa-ul li {
+                      list-style-type: none;
+                  }
+
+            .reveal {
+                color: black;
+             }       
+
+    </style>
+
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        var printMode = window.location.search.match(/print-pdf/gi);
+        link.href = printMode ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+<!-- 
+
+Neural Embeddings, Latent Spaces und Autoencoder mit TensorFlow 2
+
+Die Idee von Autoencodern und Embeddings ist, komplexe Daten oder Bilder in einen "Latent Space" mit deutlich weniger
+Dimensionen zu transformieren. Diese Art der Dimensionsreduktion ist deutlich flexibler als ein lineares Verfahren wie
+PCA und lässt sich auch auf nicht numerische Daten anwenden. Dies kann als eine Vorverarbeitungsstufe für Supervised
+oder Unsupervised Learning nützlich sein. Oder man nutzt den erzeugten Latent Space bei weniger als drei Dimensionen
+direkt für eine grafische Ausgabe.
+
+In diesem Workshop lernst du dazu, wie
+* Autoencoder komplexe Bilder in zwei Dimensionen übersetzen können,
+* Neural Embeddings Kategorien wie Fußballspieler oder Fluglinien anhand beliebiger Eigenschaften vergleichbar machen.
+
+Bei beiden Beispielen können wir sowohl Ähnlichkeiten und Gemeinsamkeiten, aber auch Ausreißer erkennen und weiter analysieren.
+
+VORKENNTNISSE
+Dies ist ein fortgeschrittenes Training. Du solltest dich daher bereits mit TensorFlow beschäftigt haben oder zumindest verstehen, 
+wie Neuronale Netze aufgebaut sind und trainiert werden.
+
+LERNZIELE
+Die Teilnehmer können erkennen, wo Embeddings oder Autoencoder sinnvoll eingesetzt werden können. Dazu erlernen sie Methoden, 
+diese mit TensorFlow 2 umzusetzen.
+
+14:15 - 17:45, 3 Std. Netto
+
+https://ml-essentials.de/lecture.php?id=10747&source=0            
+
+Agenda
+1. Intro
+    * Functional Keras API in TensorFlow 2 auf Colab Notebooks
+2. Warum Autoencoder und was sind die überhaupt?
+   * Fallbeispiel: Ähnlichkeiten von Bildern
+   * Autoencoder auf Bilddaten trainieren
+   * Extraktion und Darstellung des Latent Spaces
+3. Neural Embeddings
+   * Fallbeispiel: Ähnlichkeit von Fluglinien
+   * Netzwerk Architektur für das Fallbeispiel
+   * Training auf komplexen Daten
+   * Extraktion und Darstellung des Embeddings
+4. Ausblick
+  * GAN
+  * Weitere Anwendungen
+
+ -->
+
+            <!-- <section data-markdown class="preparation">
+                <textarea data-template>
+### Preparation
+
+                </textarea>
+            </section> -->
+<!-- 
+            <section data-markdown class="todo">
+                    <textarea data-template>
+</textarea>
+</section>
+ -->
+<!-- <section data-markdown class="todo">
+        <textarea data-template>
+Nice to have            
+[]Für Stabilisierung: https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/random/set_seed 
+[]https://medium.com/tensorflow/introducing-tf-text-438c8552bd5e für Vorverarbeitung der Texte
+</textarea>
+</section> -->
+
+
+
+<!-- 
+<section data-markdown class="todo">
+    <textarea data-template>
+
+UMAP
+	* https://towardsdatascience.com/how-to-program-umap-from-scratch-e6eff67f55fe 
+	* https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668 
+	* https://twitter.com/leland_mcinnes/status/1191813673322500101 
+
+
+
+Automatische Segmentierung: https://twitter.com/gevero/status/1195107315051089920
+
+Denoising documents using AutoEncoders
+* https://twitter.com/A_K_Nain/status/1192842066377596931 
+* https://colab.research.google.com/drive/1TP3ESK7U1qhSV6zikZyS4VdBqESuJNXS
+
+Alternativen zu Outlier detection
+* https://towardsdatascience.com/5-ways-to-detect-outliers-that-every-data-scientist-should-know-python-code-70a54335a623
+* Variational Autoencoders Pursue PCA Directions (by Accident): https://twitter.com/hardmaru/status/1103064594241732608
+  *  learning interpretable (disentangled) representations, VAE and its variants show unparalleled performance: https://arxiv.org/abs/1812.06775
+</textarea>
+</section>
+
+<section data-markdown class="todo">
+        <textarea data-template>
+### Use Case, Anomaly detection
+
+Autorencoder: can it reproduce after training on normal data? If loss over threshold: anomaly
+
+Gan: discriminator can already do it
+
+<img src='img/material/IMG_20191210_104055.jpg'>
+</textarea>
+    </section>
+    
+    <section data-markdown class="todo">
+        <textarea data-template>
+https://towardsdatascience.com/a-keras-based-autoencoder-for-anomaly-detection-in-sequences-75337eaed0e5
+        </textarea>
+    </section>
+
+
+    <section data-markdown class="todo">
+        <textarea data-template>
+https://quantdare.com/dimensionality-reduction-method-through-autoencoders/
+        </textarea>
+    </section>
+    
+    <section data-markdown class="preparation">
+        <textarea data-template>
+### Preparation
+* 2 kinds of post its for question and done
+        </textarea>
+    </section> -->
+
+<section data-markdown class='local' style="font-size: xx-large">
+<textarea data-template>
+### Workshop: Neural Embeddings, Latent Spaces und Autoencoder mit TensorFlow 2
+
+_Make sure you are prepared_
+1. #wifi Name: xxx, pwd: xxx
+1. Open this slide deck: http://bit.ly/ml-essentials-embeddings
+1. Make sure you are ready to work with Colab
+* open https://colab.research.google.com/notebooks/welcome.ipynb in Chrome (IE will not work)
+* make it run using the "Run All" command from the "Runtime" menu
+* you need to allow execution and must either have a Google login or are willing to create one
+* Go through the notebook and make yourself comfortable with Colab
+
+_Talk to your neighbors or ask Olli for help_   
+</textarea>
+</section>
+
+<section>
+        <h2>Neural Embeddings, Latent Spaces und Autoencoder mit TensorFlow 2</h2>
+        <p><a target="_blank" href="https://ml-essentials.de/lecture.php?id=10747">
+            ML Essentials 2020, Heidelberg
+        </a></p>
+<h4><a href="http://zeigermann.eu">Oliver Zeigermann</a> / <a href="http://twitter.com/djcordhose">@DJCordhose</a>
+</h4>
+<p><small>Slides: <a href="http://bit.ly/ml-essentials-embeddings">
+http://bit.ly/ml-essentials-embeddings
+</a></small></p>
+</section>
+
+<section data-markdown style="font-size: x-large;" class="backup">
+    <textarea data-template>
+
+Agenda, 3 Std.
+1. Intro: Anomagram, 1 Std.
+
+2. Warum Autoencoder und was sind die überhaupt?
+    * Fallbeispiel: Ähnlichkeiten von Bildern
+    * Autoencoder auf Bilddaten trainieren
+    * Extraktion und Darstellung des Latent Spaces
+
+3. Neural Embeddings
+    * Fallbeispiel: Ähnlichkeit von Fluglinien
+    * Netzwerk Architektur für das Fallbeispiel
+    * Training auf komplexen Daten
+    * Extraktion und Darstellung des Embeddings
+
+4. Abschluss: Weitere Anwendungen
+
+</textarea>
+</section>
+<!-- 
+Original Agenda
+1. Intro
+    * Functional Keras API in TensorFlow 2 auf Colab Notebooks
+
+2. Warum Autoencoder und was sind die überhaupt?
+    * Fallbeispiel: Ähnlichkeiten von Bildern
+    * Autoencoder auf Bilddaten trainieren
+    * Extraktion und Darstellung des Latent Spaces
+
+3. Neural Embeddings
+    * Fallbeispiel: Ähnlichkeit von Fluglinien
+    * Netzwerk Architektur für das Fallbeispiel
+    * Training auf komplexen Daten
+    * Extraktion und Darstellung des Embeddings
+
+4. Abschluss: Weitere Anwendungen
+ -->
+<section data-markdown class="local">
+    <textarea data-template>
+## Questions, comments, critique are welcome at any time
+</textarea>
+</section>
+
+<section data-markdown style="font-size: x-large">
+    <textarea data-template>        
+## Post Its
+
+<img src='img/post-its.jpg' height="400">
+
+* Stick the red one to your laptop to indicate you need help (please remove after you have been helped)
+* Do the same with the blue one to indicate you are done with an exercise (please remove at the beginning of each exercise)
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>        
+## Scatchpad to share links and information
+
+On Google Drive, everyone with link can read and edit
+
+<!-- http://bit.ly/mcubed-nn-scratch -->
+<!-- https://docs.google.com/document/d/17jNrh-eeeCSHGIMry7xNobc8UCkqVkzUf7o2pT7e4g0/edit?usp=sharing -->
+</textarea>
+</section>
+
+<section data-markdown class="local">
+        <textarea data-template>
+## Introduce yourself to your neighbors, please
+
+* What are you working on?
+* What do you already know about the topic of the course?
+* What do you want to learn / achieve?
+* Something astonishing about you
+
+If necessary please help your neighbors to get to theses slides 
+    and make the first notebook run (described in first slide)
+
+        </textarea>
+    </section>
+
+<section data-markdown class="local fragments" style="font-size: x-large">
+    <textarea data-template>
+### What is your background?
+
+Technical
+* Data Science
+* Programming
+* Classic Machine Learning
+* Neural Networks
+* What else?
+
+Tools
+* Matlab
+* R
+* Python
+* Scikit-learn
+* TensorFlow 1/2
+* Pytorch
+* What else?
+
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+## Now is your chance if you have a question to the other participants
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### Objectives
+
+* Basic understanding of embeddings
+* Deeper Understanding of how neural networks work
+* Use cases for embeddings
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+## Part I
+### Basics and Introductory Example
+
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### The brain might map out ideas like spaces
+
+<img src='img/embeddings/brain-abstract-knowledge.jpg' height="450">
+
+<small>
+
+https://twitter.com/PhilosophyMttrs/status/1085242776688775169
+
+</small>
+</textarea>
+</section>
+
+<section data-markdown class="fragments">
+    <textarea data-template>
+### Autoencoders
+
+* neural network trained in unsupervised manner
+* reproduces input while going through a low-dim bottleneck
+* low-dim latent representation is what you are interested in
+* works on all kinds of data, e.g. image, audio, and tabular
+
+<img src='img/unsupervised/autoencoder_schema.jpg'>
+
+
+<small>
+
+https://blog.keras.io/building-autoencoders-in-keras.html
+
+</small>
+        
+</textarea>
+</section>
+
+<section data-markdown class="fragments">
+    <textarea data-template>
+### Why Autoencoders
+
+* compression
+* data denoising
+* dimensionality reduction / clustering (for data visualization)
+* building an abstract representation for further use
+
+<small>
+
+https://blog.keras.io/building-autoencoders-in-keras.html
+
+</small>
+        
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### Example Application: Outlier Detection
+
+An anomaly (outlier, abnormality) is defined as “an observation which deviates so much from other observations as to
+arouse suspicions that it was generated by a different mechanism” - Hawkins 1980.
+
+https://www.springer.com/gp/book/9789401539968
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### Demo Anomagram 
+
+<img src='img/embeddings/anomagram-inference.gif' height="450">
+<br>
+<small>
+
+https://github.com/victordibia/anomagram        
+https://victordibia.github.io/anomagram/#/
+    
+</small>
+</textarea>
+</section>
+
+<section data-markdown class="fragments">
+    <textarea data-template>
+### Detecting Anomalies in electrocardiograms (ECG) 
+
+* Train with normal data to low reconstruction loss
+* Abnormal data will not be reproduced well, i.e. will have high reconstruction loss
+* Set a threshold on loss by maximizing a metric
+* Does not need abnormal data for training
+* Can do without any labelling
+
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### Exercise Train your first Autoencoder 
+
+<img src='img/embeddings/anomagram-training.gif' height="450">
+<br>
+<small>
+
+https://victordibia.github.io/anomagram/#/train    
+</small>
+</textarea>
+</section>
+
+
+<section data-markdown class="backup">
+    <textarea data-template>
+### Metrics
+
+* _Precision_: percentage of positive predictions that are correct
+    * true positive / true positive + false positive (predicted as true, but is false)
+* _Recall_ (aka hit rate): proportion of actual positives that were correctly predicted
+    * true positive / true positive + false negative (predicted as false, but is true)
+* low enough threshold will yield excellent recall but reduced precision
+<!-- * F1 score is the harmonic mean of the precision and recall -->
+
+<small>
+https://zackakil.github.io/precision-recall-playground/
+https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62
+https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5
+</small>
+</textarea>
+</section>
+
+<section data-markdown class="backup">
+    <textarea data-template>
+## Part I
+### Tools: TensorFlow 2's functional Keras API in on Colab notebooks
+
+https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/tf-keras-api.ipynb
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+## Part II
+### Autoencoders with TensorFlow 2        
+
+https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf-intro/2020-01-autoencoder.ipynb
+
+<small>
+
+### Details
+Dimensionality Reduction: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/autoencoder-mnist.ipynb
+
+Denoising: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/autoencoder-mnist-cnn-reconstruct.ipynb
+
+    
+</small>
+<!-- VAE / GAN: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/autoencoder-mnist-vae-gan.ipynb -->
+
+<!-- https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/autoencoder-mnist-experiments.ipynb -->
+
+</textarea>
+</section>
+
+<!-- <section data-markdown class="todo">
+    <textarea data-template>
+### Autoencoder
+* From Hinton 2006: http://www.cs.toronto.edu/~hinton/science.pdf
+</textarea>
+</section> -->
+
+<section data-markdown>
+    <textarea data-template>
+## Part III
+### Neural Embeddings       
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### When Autoencoders are not enough
+
+* Autoencoder are great when there are semantics in your data
+* e.g in imgages, videos, sounds
+
+_But what if you have plain categories, that do not contain semantics all by themselves?_
+
+</textarea>
+</section>
+
+
+<section data-markdown>
+    <textarea data-template>
+### Imagine you want to compare airlines
+
+<img src='img/embeddings/airline-embedded-cluster.png' height="550px">
+
+</textarea>
+</section>
+
+<section data-markdown>
+        <textarea data-template>
+### Why would you want that?
+
+_Exploration of concepts_
+
+* Which ones are similar?
+* Which are exceptions?
+
+_You probably have a different use case_
+
+            </textarea>
+        </section>
+
+<section data-markdown>
+        <textarea data-template>
+### Isn't that easy?
+
+* First dimension: number of passengers
+* Second dimension: similarity by typical route
+
+            </textarea>
+        </section>
+
+<section data-markdown>
+        <textarea data-template>
+## Challenge
+
+### How do you describe such a complex similarity in a single dimension?
+
+            </textarea>
+        </section>
+
+<section data-markdown>
+        <textarea data-template>
+## Neural Networks are flexible enough to help
+
+### From the unsupervised approach of the Autoencoder we go over to a supervised approach
+
+Boundaries between supervised and unsupervised soften up in neural network land
+
+            </textarea>
+        </section>
+
+
+<section data-markdown>
+        <textarea data-template>
+
+<img src='img/embeddings/embedding_1.png' height="650px">
+
+            </textarea>
+        </section>
+
+
+<section data-markdown>
+        <textarea data-template>
+
+<img src='img/embeddings/embedding_2.png' height="650px">
+
+            </textarea>
+        </section>
+
+<section data-markdown>
+        <textarea data-template>
+
+<img src='img/embeddings/embedding_3.png' height="650px">
+
+            </textarea>
+        </section>
+
+<section data-markdown>
+        <textarea data-template>
+
+<img src='img/embeddings/embedding_4.png' height="650px">
+
+            </textarea>
+        </section>
+
+<section>
+    <h3>Train embedding with TensorFlow</h3>
+
+    <pre><code contenteditable data-trim class="fragment line-numbers python">
+number_of_airlines = len(airlines) + 1
+embedding_dim = 1 # up to us
+
+model.add(Embedding(input_dim=number_of_airlines, 
+                    output_dim=embedding_dim))
+</code></pre>
+
+    <pre><code contenteditable data-trim class="fragment line-numbers python">
+# embedding will be n-dimensional, but Dense can only handle flat input
+model.add(Flatten())
+
+# random additional layers to at least make this train
+model.add(Dense(units=50, activation='relu'))
+# ...
+</code></pre>
+
+    <pre><code contenteditable data-trim class="fragment line-numbers python">
+# two airports in a route
+model.add(RepeatVector(2))
+model.add(SimpleRNN(units=50, return_sequences=True))
+
+# ca. 3500 airports in routes
+output_dim = len(routes_tokenizer.word_index) + 1
+model.add(Dense(units=output_dim, activation='softmax'))
+</code></pre>
+
+</section>
+
+<section data-markdown>
+        <textarea data-template>
+### Make sure the model trains / loss converges
+
+<div style="float: left">
+<img src='img/embeddings/airlines-2d-loss.png' height="300px"><br>
+Loss
+</div>
+<div style="float: right" >
+<img src='img/embeddings/airlines-2d-acc.png' height="300px"><br>
+Accuracy
+</div>
+
+<div style="clear: both">
+Curves for 2-d embedding (1-d accuracy closer to 10%)
+
+<small>        
+https://github.com/DJCordhose/ml-workshop/blob/master/notebooks/tf-intro/2020-01-embeddings.ipynb
+</small>
+</div>
+</textarea>
+</section>
+
+    <section data-markdown>
+    <textarea data-template>
+## What's the point?
+
+### Now we have a bad model
+
+        </textarea>
+    </section>
+
+<section data-markdown>
+    <textarea data-template>
+## It is the output of the embedding layer we are interested in
+
+Pretty much like in a plain Autoencoder
+
+        </textarea>
+    </section>
+
+<section data-markdown>
+    <textarea data-template>
+
+<img src='img/embeddings/embedding_4.png' height="650px">
+
+        </textarea>
+    </section>
+
+
+<section data-markdown>
+    <textarea data-template>
+
+<img src='img/embeddings/embedding_5.png' height="650px">
+
+        </textarea>
+    </section>
+
+<section data-markdown>
+        <textarea data-template>
+### Extracting embedding
+
+<pre><code contenteditable data-trim class="fragment line-numbers python">
+embedding_layer = model.get_layer('embedding')
+embedding_model = Model(inputs=model.input, 
+                        outputs=embedding_layer.output)
+embeddings_2d = embedding_model.predict(samples).reshape(-1, 2)
+</code></pre>
+
+<pre><code contenteditable data-trim class="fragment line-numbers python">
+latent_x = embeddings_2d[:, 0]
+latent_y = embeddings_2d[:, 1]
+
+plt.scatter(latent_x, latent_y)
+</code></pre>
+<small>
+
+https://github.com/DJCordhose/ml-workshop/blob/master/notebooks/tf-intro/2020-01-embeddings.ipynb
+</small>
+
+</textarea>
+        </section>
+
+<section data-markdown>
+    <textarea data-template>
+### Resulting Plot of Airline Embedding 
+
+<img src='img/embeddings/2d_embedding_airlines.png' class='with-border' style="float: left" height="350px">
+<img src='img/embeddings/1d_embedding_airlines.png' class='with-border' style="float: right" height="350px">
+
+    </textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### Result: Clustering using 1d embedding
+
+<img src='img/embeddings/airline-embedded-cluster.png' height="550px">
+
+</textarea>
+</section>
+
+<section data-markdown class="fragments">
+    <textarea data-template>
+### What did we just do here?
+
+_We trained a neural embedding_
+
+* Train an embedding layer as part of a neural network
+* Each neuron in the embedding layer serves as one dimension of embedding
+* extremely flexible setup
+* can reduce dimensions of really abstract concepts
+* can encode non-linear relationships
+
+_Embedding: Transform a high dim. vector space to a lower one_
+
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+## Every Story needs a wolf
+
+
+<img src='img/chk_wolf.jpg' height="450px" style="float: left">
+
+<img src='img/chk_rot.jpg' height="450px" style="float: right">
+
+
+</textarea>
+</section>
+
+
+<section data-markdown>
+    <textarea data-template>
+### Our Wolf: The Turtle Effect
+
+If the user gets used to a certain pattern to be in the model, 
+they expect it to persist and even be in the same position
+
+<img src="img/turtle.png" height="400px">
+
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+## Issue
+### You would not want the data points to move around
+
+* Might happen when model changes
+* Or new data comes in
+* or simply with each training run, even without changes
+* people do not want to see drastic changes in visualizations when just a few data points change
+
+</textarea>
+</section>
+
+<section data-markdown data-transition='none'>
+<textarea data-template>
+### Clustering original
+
+<img src='img/embeddings/cluster-original.png' height="550px">
+
+    </textarea>
+</section>
+
+<section data-markdown data-transition='none'>
+<textarea data-template>
+### Clustering after Retraining with more data
+
+<img src='img/embeddings/clsutering-same-seed.png' height="550px">
+
+    </textarea>
+</section>
+
+<section data-markdown class="fragments">
+<textarea data-template>
+### How to stabilize the embedding?
+
+1. _Transfer_: Use initial model as starting point and _carefully_ retrain
+* use small learning rate
+* will work only if model architecture has not changed
+1. _Force_: Train from scratch, but use difference to original embedding as part of loss function
+* Wow, sounds promising, as it should work under all circumstances
+* but: How do we do this???
+
+</textarea>
+</section>
+
+<section data-markdown class="fragments remote">
+<textarea data-template>
+### Using second model head and loss
+
+1. use old model to encode new/augmented data into embedding
+1. remember this embedding data
+1. train from scratch with new/augmented data and/or new model architecture
+1. use difference to original embedding as part of loss function
+1. calibrate how much change you desire by weight of that loss
+
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+
+<img src='img/embeddings/embedding_4.png' height="650px">
+
+        </textarea>
+    </section>
+
+    <section data-markdown>
+        <textarea data-template>
+
+<img src='img/embeddings/embedding_6_loss_1.jpg' height="650px">
+    
+            </textarea>
+        </section>
+        <section data-markdown>
+            <textarea data-template>
+        
+<img src='img/embeddings/embedding_6_loss_2.jpg' height="650px">
+        
+                </textarea>
+            </section>
+            
+<section data-markdown>
+    <textarea data-template>
+### Functional API allows for all kinds of wiring
+
+<pre><code contenteditable data-trim class="fragment line-numbers python">
+# example for model changes
+
+x = Dense(units=50, ...)(x)
+# second dense layer
+x = Dense(units=50, ...)(x)
+# ...
+# less units (25 instead of 50)
+x = SimpleRNN(units=25, ...)(x)
+</code></pre>
+
+<pre><code contenteditable data-trim class="fragment line-numbers python">
+# Head 1: main_output, Head 2: embedding
+model = Model(inputs=main_input, outputs=[main_output, embedding])
+</code></pre>
+
+<pre><code contenteditable data-trim class="fragment line-numbers python">
+model.compile(loss={ 'main_output': 'sparse_categorical_crossentropy', 
+                 'embedding': 'mae' },
+              loss_weights={'main_output': .1, 'embedding': 1.})
+</code></pre>
+
+<pre><code contenteditable data-trim class="fragment line-numbers python">
+model.fit(x=X, y={'main_output': Y, 'embedding': original_embeddings})
+</code></pre>
+
+<small>
+
+https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/embeddings-retrain.ipynb
+
+</small>
+</textarea>
+    </section>
+
+<section data-markdown>
+    <textarea data-template>
+### Model still trains well
+
+<div style="float: left">
+<img src='img/embeddings/multi-head-losses.png' height="350px"><br>
+Losses
+</div>
+<div style="float: right" >
+<img src='img/embeddings/main-output-accuracy.png' height="350px"><br>
+Accuracy on Main Head
+</div>
+
+</textarea>
+</section>
+
+
+<section data-markdown data-transition='none'>
+<textarea data-template>
+### Clustering original
+
+<img src='img/embeddings/cluster-original.png' height="550px">
+
+    </textarea>
+</section>
+
+<section data-markdown data-transition='none'>
+<textarea data-template>
+### Clustering Stabilized
+
+<img src='img/embeddings/clustering-stabelized.png' height="550px">
+
+    </textarea>
+</section>
+
+<section data-markdown data-transition='none'>
+<textarea data-template>
+### Clustering original
+
+<img src='img/embeddings/cluster-original.png' height="550px">
+
+    </textarea>
+</section>
+
+
+<section data-markdown data-transition='none'>
+<textarea data-template>
+### Clustering Unstabilized
+
+<img src='img/embeddings/clsutering-same-seed.png' height="550px">
+
+    </textarea>
+</section>
+
+<section data-markdown class="remote">
+<textarea data-template>
+### How to deal with additional data?
+
+* create the additional embeddings on new/augmented/updated data using old model
+* use that on the old/new/updated model architecture
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+## Part IV - What Else?
+### Restricted Boltzmann Machines, VAEs, and GANs        
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+<img src='img/NeuralNetworkZoo20042019.png' height="600">        
+<small>
+https://www.asimovinstitute.org/neural-network-zoo/    
+</small>        
+    </textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### Restricted Boltzmann Machines (RBMs)
+
+* RBMs were founded 1986 by Geoffrey Hinton
+* Two-Layer networks like half an autoencoder where do flows back and forth
+* interesting for historical reasons, but surpassed by more up-to-date models: AE, VAE, GANS
+* Embeddings/Latent Space/Hidden Representation originally called 'Distributed representations'
+<small>
+
+https://en.wikipedia.org/wiki/Boltzmann_machine    
+https://dl.acm.org/citation.cfm?id=104287
+http://www.cs.toronto.edu/~hinton/absps/families.pdf
+https://pathmind.com/wiki/restricted-boltzmann-machine
+https://towardsdatascience.com/restricted-boltzmann-machines-simplified-eab1e5878976
+</small>
+</textarea>
+</section>
+
+<section data-markdown class="fragments">
+    <textarea data-template>
+### Variational Auto Encoders (VAE)
+
+* VAE is a generative model
+* latent space learns a probability distribution modelling your data
+* actually learning mean and standard deviation of distribution
+* sampling from it can generate new data
+
+<small>
+
+https://blog.keras.io/building-autoencoders-in-keras.html
+<br>
+https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/autoencoder-mnist-vae-gan.ipynb
+https://github.com/keras-team/keras/blob/master/examples/variational_autoencoder.py
+
+</small>
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### VAE illustrated
+
+<img src='img/unsupervised/vae.png' height="500px">
+
+<small>
+
+https://towardsdatascience.com/intuitively-understanding-variational-autoencoders-1bfe67eb5daf
+</small>
+
+</textarea>
+</section>
+
+<!-- <section data-markdown>
+    <textarea data-template>
+
+VAE / GAN: https://colab.research.google.com/github/DJCordhose/ml-workshop/blob/master/notebooks/tf2/autoencoder-mnist-vae-gan.ipynb
+</textarea>
+</section>
+ -->
+<!-- <section data-markdown class="todo">
+<textarea data-template>
+### VAE
+
+* Intro: https://youtu.be/9zKuYvjFFS8
+* https://github.com/tensorflow/tensorflow/blob/r1.11/tensorflow/contrib/eager/python/examples/generative_examples/cvae.ipynb
+* Sean's Notebook: https://colab.research.google.com/drive/1f73wONMp8U2LvAmN0MNGyflqGFog0g2S
+* VAE: 
+* http://tiao.io/posts/implementing-variational-autoencoders-in-keras-beyond-the-quickstart-tutorial/
+
+</textarea>
+</section> -->
+
+<section data-markdown>
+<textarea data-template>
+## GANs
+
+https://pathmind.com/wiki/generative-adversarial-network-gan
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+### Understanding GANs
+
+<a href='https://poloclub.github.io/ganlab/'>
+<img src='img/unsupervised/gan-lab.png'>
+</a>
+    
+<small>
+
+https://twitter.com/minsukkahng/status/1037016214575505409
+https://poloclub.github.io/ganlab/
+https://minsuk.com/research/papers/kahng-ganlab-vast2018.pdf
+
+</small>
+</textarea>
+</section>
+
+<!-- <section data-markdown>
+<textarea data-template>
+#### Fun Notebooks on Fashion MNIST about AEs, VAEs, GANs 
+
+<img src='img/unsupervised/generative-model.png' height="500px">
+
+
+<small>
+
+https://github.com/timsainb/tensorflow2-generative-models/blob/master/readme.md
+
+</small>
+</textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+### More Resources for GANs
+
+* https://pathmind.com/wiki/generative-adversarial-network-gan    
+* https://developers.google.com/machine-learning/gan
+* https://github.com/ageron/handson-ml2/blob/master/17_autoencoders_and_gans.ipynb
+  * https://colab.research.google.com/github/ageron/handson-ml2/blob/master/17_autoencoders_and_gans.ipynb
+* https://www.tensorflow.org/tutorials/generative/cvae
+
+</textarea>
+</section>
+ -->
+<section data-markdown>
+    <textarea data-template>
+#### All types of neural networks can be seen as having a latent representation
+ 
+<img src='img/unsupervised/encoder-decoder-everywhere.png' height="500">
+
+
+<small style="font-size: large">
+
+https://medium.com/tensorflow/mit-deep-learning-basics-introduction-and-overview-with-tensorflow-355bcd26baf0
+
+</small>
+    </textarea>
+</section>
+
+<section data-markdown>
+    <textarea data-template>
+## Part V
+### More Applications        
+</textarea>
+</section>
+
+<section>
+<h3>Generating Celebreties</h3>
+<p>Trained for two weeks on a single high-end GPU on CelebA-HQ data set (images of celebreties)</p>
+<div class="fragment" style="float: left">
+<img src="img/unsupervised/gan-model-male2.png" height="220">
+</div>
+<div class="fragment" style="float: left; padding-left: 25px">
+    <img src="img/unsupervised/gan-model-female2.png" height="220">
+</div>
+<div class="fragment" style="float: left; padding-left: 25px">
+    <img src="img/unsupervised/gan-model-female1.png" height="220">
+</div>
+<div class="fragment" style="float: left; padding-left: 25px">
+    <img src="img/unsupervised/gan-model-male.png" height="220">
+</div>
+<p style="clear: both">
+<small>
+<a href="https://alantian.net/ganshowcase/" target="_blank">https://alantian.net/ganshowcase/</a>
+<br>
+<a href="https://github.com/alantian/ganshowcase" target="_blank">https://github.com/alantian/ganshowcase</a>
+<br>
+<a href="https://twitter.com/alanyttian/status/988242167998148608" target="_blank">https://twitter.com/alanyttian/status/988242167998148608</a>
+</small>
+               
+</p>
+</section>                                
+
+<section data-markdown>
+    <textarea data-template>
+#### Similarities in the team of BVB 2018/2019            
+<img src='img/football/embedding-bvb.png' height="800" style="position: relative; top: -100px">            
+    </textarea>
+</section>
+
+
+<section data-markdown>
+    <textarea data-template>
+### Word Embeddings using word2vec
+
+_main assumption: words appearing in similar contexts have similar meaning_
+
+<a href='https://projector.tensorflow.org'>
+<img src="img/embeddings/embedding-projector.png" height="350px">
+</a>
+
+<small>
+
+https://projector.tensorflow.org
+</small>
+</textarea>
+</section>
+
+
+<section data-markdown class="fragments" style="font-size: xx-large">
+    <textarea data-template>
+## Thank you - Wrapping it up
+
+* Autoencoders reproduce an input while going through a low-dim bottleneck
+* They are a special kind of neural network trained in unsupervised manner
+* Embeddings / Latent Representations describe the more general concept of compressing a concept in a low-dim bottleneck  
+* Most networks can be seen as having such a latent representations
+* Applications include 
+    * preprocessing
+    * dimensionality reduction
+    * anomaly detection
+
+<div></div>
+<a href="http://zeigermann.eu">Oliver Zeigermann</a> / <a href="http://twitter.com/djcordhose">@DJCordhose</a>
+<br>
+Slides:     <a href="http://bit.ly/ml-essentials-embeddings">http://bit.ly/ml-essentials-embeddings</a>
+    </textarea>
+    </section>
+
+        </div>
+    </div>
+
+    <script src="reveal.js/js/reveal.js"></script>
+    <script src="lib/jquery-2.2.4.js"></script>
+
+    <script>
+        // $('section:not([data-background])').attr('data-background', "background/white.jpg");
+        $('section:not([data-background])').attr('data-background', "background/sky.jpg");
+
+    </script>
+    <script>
+        const isLocal = window.location.hostname.indexOf('localhost') !== -1 || 
+                    window.location.hostname.indexOf('127.0.0.1') !== -1;
+    
+        $('.backup').remove();
+        if (isLocal && !printMode) {
+            // only applies to local version
+            $('.remote').remove();
+        } else {
+            // only applies to public version
+                $('.todo').remove();
+                $('.preparation').remove();
+                $('.local').remove();
+        }
+    
+        Reveal.addEventListener( 'ready', function( event ) {
+            // applies to all versions
+            $('code').addClass('line-numbers');
+    
+            $('.fragments li').addClass('fragment')
+    
+            // make all links open in new tab
+            $('a').attr('target', '_blank')
+    
+            if (isLocal && !printMode) {
+                // only applies to presentation version
+                Reveal.configure({ controls: false });
+            } else {
+                // only applies to public version
+                $('.fragment').removeClass('fragment');
+            }
+    
+    
+        } );
+    </script>
+    
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            controls: true,
+            progress: false,
+            history: true,
+            center: true,
+            width: 1100,
+
+            transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+            math: {
+                mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+            },
+
+            dependencies: [
+                { src: 'reveal.js/plugin/markdown/marked.js' },
+                { src: 'reveal.js/plugin/markdown/markdown.js' },
+                { src: 'reveal.js/plugin/notes/notes.js', async: true },
+                { src: 'reveal.js/plugin/highlight/highlight.js', async: true },
+                { src: 'lib/js/line-numbers.js' },
+                { src: 'reveal.js/plugin/math/math.js', async: true }
+            ]
+        });
+    </script>
+</body>
+
+</html>

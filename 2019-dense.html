@@ -140,6 +140,16 @@
     <div class="reveal">
         <div class="slides">
 
+<section data-markdown class="todo">
+        <textarea data-template>
+### Autotuning of parameters
+
+https://keras-team.github.io/keras-tuner/            
+https://twitter.com/fchollet/status/1189992078991708160
+
+</textarea>
+</section>
+
 <section data-markdown>
         <textarea data-template>
 
@@ -806,6 +816,62 @@ https://colab.research.google.com/github/djcordhose/ml-workshop/blob/master/note
 </small>
 </textarea>
     </section>
+
+
+    <section data-markdown>
+        <textarea data-template>
+### Is 80% good?
+
+_you need to understand the business problem to decide_
+
+* How accurate does my model really need to be? What kind of false positive rate is acceptable?
+* What data can I use? If you’re predicting flight days tomorrow, you can look at weather data, but if someone is buying a flight a month from now then you’ll have no clue.
+<small>
+
+https://jvns.ca/blog/2014/06/19/machine-learning-isnt-kaggle-competitions/    
+https://towardsdatascience.com/measuring-model-goodness-part-1-a24ed4d62f71
+</small>
+    
+</textarea>
+    </section>
+
+    
+<section data-markdown style="font-size: xx-large" class="fragments">
+    <textarea data-template>
+## Practical Advice from Olli
+
+* Accuracy should be actionable
+* Overfit on a small subset
+* Have clear input and output
+* Could a human learn from that data?
+* Train/Test Split
+* Fight overfitting
+* Start small and humble
+* Make incremental changes to something that works in some way
+* Use a baseline so you know what is possible
+* Once you have anything working, save it as a copy
+
+<!-- After production:
+* You are never done
+* Going into production is not the end of the story
+* Don't let your model go stale -->
+</textarea>
+</section>
+
+<section data-markdown style="font-size: xx-large">
+    <textarea data-template>
+### Words from François Chollet
+
+<img src='img/fcholett-acc.png' height="500">
+
+<small>
+
+https://twitter.com/fchollet/status/1176625911036145666
+    </small>
+</textarea>
+</section>
+
+
 
         </div>
     </div>
